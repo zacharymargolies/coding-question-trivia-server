@@ -1,18 +1,31 @@
-const User = require('./user')
+// TODO: Require models here, define associations, export models
+const Fact = require('./fact');
+const Topic = require('./topic');
+const Question = require('./question');
+const Answer = require('./answer.js');
 
-/**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
- */
+// Many facts belong to any Topic: Topic --> fact, fact, fact
+Topic.hasMany(Fact);
+Fact.belongsTo(Topic);
 
-/**
- * We'll export all of our models here, so that any time a module needs a model,
- * we can just require it from 'db/models'
- * for example, we can say: const {User} = require('../db/models')
- * instead of: const User = require('../db/models/user')
- */
+// A fact has many questions: Fact --> question, question, question
+Fact.hasMany(Question);
+Question.belongsTo(Fact);
+
+// A topic has many question: Topic --> question, question, question
+Topic.hasMany(Question);
+Question.belongsTo(Topic);
+
+// Topics may have sub-topics: Topic --> topic, topic, topic
+Topic.hasMany(Topic);
+Topic.belongsTo(Topic);
+
+// Questions have one correct answer: Question --> correct answer, false answer, false answer
+Question.hasOne(Answer);
+Answer.belongsTo(Question);
+
 module.exports = {
-  User
-}
+  Fact,
+  Topic,
+  Question
+};
