@@ -188,9 +188,29 @@ const newQuestions = [
 
 const newAnswers = [
   {
-    value: 'What does HTML stand for?',
+    value: 'Hypertext Markup Language',
     type: 'Multiple Choice',
     questionId: 1
+  },
+  {
+    value: 'Cascading Stylesheets',
+    type: 'Multiple Choice',
+    questionId: 0
+  },
+  {
+    value: 'Anchor tag',
+    type: 'Multiple Choice',
+    questionId: 0
+  },
+  {
+    value: 'Paragraph tag',
+    type: 'Multiple Choice',
+    questionId: 0
+  },
+  {
+    value: 'True',
+    type: 'True / False',
+    questionId: 0
   }
 ]
 
