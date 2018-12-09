@@ -195,23 +195,23 @@ const newAnswers = [
   {
     value: 'Cascading Stylesheets',
     type: 'Multiple Choice',
-    questionId: 0
+    questionId: 2
   },
   {
     value: 'Anchor tag',
     type: 'Multiple Choice',
-    questionId: 0
+    questionId: 3
   },
   {
     value: 'Paragraph tag',
     type: 'Multiple Choice',
-    questionId: 0
-  },
-  {
-    value: 'True',
-    type: 'True / False',
-    questionId: 0
+    questionId: 4
   }
+  // {
+  //   value: 'True',
+  //   type: 'True / False',
+  //   questionId: 5
+  // }
 ]
 
 async function seed() {
