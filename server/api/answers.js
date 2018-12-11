@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {Question, Topic, Answer} = require('../db/models')
 const asyncHandler = require('express-async-handler')
 const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 // GET ALL ANSWERS
 router.get(
@@ -17,12 +18,12 @@ router.get(
   '/random/:topicId',
   asyncHandler(async (req, res, next) => {
     const topicId = req.params.topicId
-    const randomAnswer = await Answer.findAll({
+    const randomAnswers = await Answer.findAll({
       where: {topicId},
       order: Sequelize.fn('RANDOM'),
       limit: 3
     })
-    res.json(randomAnswer)
+    res.json(randomAnswers)
   })
 )
 
