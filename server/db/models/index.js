@@ -24,6 +24,10 @@ Topic.belongsTo(Topic)
 Question.hasOne(Answer)
 Answer.belongsTo(Question)
 
+// Answers have one topic: Answer --> Topic
+Topic.hasMany(Answer)
+Answer.belongsTo(Topic)
+
 module.exports = {
   Fact,
   Topic,

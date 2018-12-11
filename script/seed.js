@@ -190,22 +190,26 @@ const newAnswers = [
   {
     value: 'Hypertext Markup Language',
     type: 'Multiple Choice',
-    questionId: 1
+    questionId: 1,
+    topicId: 1
   },
   {
     value: 'Cascading Stylesheets',
     type: 'Multiple Choice',
-    questionId: 2
+    questionId: 2,
+    topicId: 1
   },
   {
     value: 'Anchor tag',
     type: 'Multiple Choice',
-    questionId: 3
+    questionId: 3,
+    topicId: 2
   },
   {
     value: 'Paragraph tag',
     type: 'Multiple Choice',
-    questionId: 4
+    questionId: 4,
+    topicId: 4
   }
   // {
   //   value: 'True',

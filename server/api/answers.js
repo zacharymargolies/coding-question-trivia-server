@@ -12,11 +12,13 @@ router.get(
   })
 )
 
-// GET RANDOM ANSWER
+// GET RANDOM ANSWERS BY TOPIC
 router.get(
-  '/random',
+  '/random/:topicId',
   asyncHandler(async (req, res, next) => {
+    const topicId = req.params.topicId
     const randomAnswer = await Answer.findAll({
+      where: {topicId},
       order: Sequelize.fn('RANDOM'),
       limit: 3
     })
