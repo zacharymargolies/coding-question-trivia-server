@@ -13,6 +13,29 @@ router.get(
 )
 
 // GET QUESTIONS BY TOPIC
+
+// GET /api/topics/1 --> eager load questions+answers & answers
+/*
+{
+  id: 1,
+  name: 'sequelize',
+  questions: [{
+    id: 1,
+    text: 'sdkjfhdkjfh',
+    answer: {
+      id: 1,
+      text: 'sdkjfhkjdshf'
+    }
+  }],
+  answers: [{
+    id: 1,
+    ...
+  }]
+}
+*/
+
+// GET /api/questions?topicId=1
+
 router.get(
   '/topic/:topicId',
   asyncHandler(async (req, res, next) => {
@@ -25,16 +48,6 @@ router.get(
         {
           model: Answer
         }
-        // {model: Topic}
-        // {
-        // all: true,
-        // model: Answer,
-        // where: {topicId},
-        // separate: true
-        // required: false
-        // order: Sequelize.fn('RANDOM')
-        // limit: 3
-        // }
       ]
     })
     res.json(questionsBytopic)

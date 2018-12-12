@@ -411,7 +411,7 @@ const newQuestions = [
     content: 'What does HTML stand for?',
     difficulty: 0.3,
     type: null,
-    answerId: 0
+    answerId: 23
   },
   {
     factId: 2,
@@ -419,7 +419,7 @@ const newQuestions = [
     content: 'What does <a></a> represent?',
     difficulty: 0.3,
     type: null,
-    answerId: 0
+    answerId: 24
   },
   {
     factId: 7,
@@ -427,16 +427,16 @@ const newQuestions = [
     content: 'What does CSS stand for?',
     difficulty: 0.3,
     type: null,
-    answerId: 0
-  },
-  {
-    factId: 8,
-    topicId: 2,
-    content: 'What <p></p> represent?',
-    difficulty: 0.3,
-    type: null,
-    answerId: 0
+    answerId: 25
   }
+  // {
+  //   factId: 8,
+  //   topicId: 2,
+  //   content: 'What <p></p> represent?',
+  //   difficulty: 0.3,
+  //   type: null,
+  //   answerId: 26
+  // }
 ]
 
 const newAnswers = [
