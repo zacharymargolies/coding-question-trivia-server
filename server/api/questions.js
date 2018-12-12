@@ -47,7 +47,8 @@ router.get(
       include: [
         {
           model: Answer
-        }
+        },
+        {model: Topic}
       ]
     })
     res.json(questionsBytopic)
