@@ -1,15 +1,16 @@
-const router = require('express').Router();
-const { Fact, Topic } = require('../db/models');
-const asyncHandler = require('express-async-handler');
+const router = require('express').Router()
+const {Fact, Topic} = require('../db/models')
+const asyncHandler = require('express-async-handler')
+import Sequelize from 'sequelize'
 
 // GET ALL FACTS
 router.get(
   '/',
   asyncHandler(async (req, res, next) => {
-    const allFacts = await Fact.findAll({});
-    res.json(allFacts);
+    const allFacts = await Fact.findAll({})
+    res.json(allFacts)
   })
-);
+)
 
 // GET FACTS BY TOPIC
 router.get(
@@ -19,11 +20,11 @@ router.get(
       where: {
         topicId: req.params.topicId
       },
-      include: [{ model: Topic }]
-    });
-    res.json(facts);
+      include: [{model: Topic}]
+    })
+    res.json(facts)
   })
-);
+)
 
 // GET FACTS BY DIFFICULTY
 router.get(
@@ -33,54 +34,66 @@ router.get(
       where: {
         difficulty: req.params.difficultyLevel
       },
-      include: [{ model: Topic }]
-    });
-    res.json(facts);
+      include: [{model: Topic}]
+    })
+    res.json(facts)
   })
-);
+)
 
 // GET FACT BY ID
 router.get(
   '/:id',
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const fact = await Fact.findById(id);
-    res.json(fact);
+    const id = req.params.id
+    const fact = await Fact.findById(id)
+    res.json(fact)
   })
-);
+)
+
+// GET RANDOM FACTS
+router.get(
+  '/random',
+  asyncHandler(async (req, res, next) => {
+    const randomFacts = await Fact.findAll({
+      order: Sequelize.fn('RANDOM'),
+      limit: 10
+    })
+    res.json(randomFacts)
+  })
+)
 
 // UPDATE QUIZZABLE VALUE
 router.put(
   '/quizzable/:id',
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const fact = await Fact.findById(id);
-    await fact.update({ quizzable: true });
-    res.json(fact);
+    const id = req.params.id
+    const fact = await Fact.findById(id)
+    await fact.update({quizzable: true})
+    res.json(fact)
   })
-);
+)
 
 // UPDATE DISCARD VALUE
 router.put(
   '/discard/:id',
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const fact = await Fact.findById(id);
-    await fact.update({ discard: true });
-    res.json(fact);
+    const id = req.params.id
+    const fact = await Fact.findById(id)
+    await fact.update({discard: true})
+    res.json(fact)
   })
-);
+)
 
 // UPDATE SPACE REPETITION DATA
 router.put(
   '/update/:id',
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const { correct, performanceRating } = req.body;
-    const fact = await Fact.findById(id);
-    await fact.updateSRD(performanceRating);
-    res.send(fact);
+    const id = req.params.id
+    const {correct, performanceRating} = req.body
+    const fact = await Fact.findById(id)
+    await fact.updateSRD(performanceRating)
+    res.send(fact)
   })
-);
+)
 
-module.exports = router;
+module.exports = router
