@@ -617,6 +617,12 @@ const newQuestions = [
 ]
 
 const newAnswers = [
+  // {
+  //   value:
+  //     'Code that requires an application to wait for some I/O operation before continuing to execute.',
+  //   type: 'Multiple Choice',
+  //   topicId: 3
+  // },
   {
     value:
       'A function and its lexical environment, meaning that it has access to the variables in its enclosing scope chain even when the function is executed outside of its lexical environment.',
@@ -665,15 +671,17 @@ const newAnswers = [
     topicId: 3
   },
   {
-    value: `-Number
-    -Use 'Number.isNan()'`,
+    value: `-Avoids callback hell by creating a linear execution flow.
+
+    -There is a standard "contract", in which the callback is executed only once and is guaranteed to resolve or reject with a value.
+
+    -Promises are objects that can be passed around (e.g. exported and imported between files).`,
     type: `Multiple Choice`,
     topicId: 3
   },
   {
-    value: `-Currying: Configuring a function to accept less than its desired number of parameters (usually one at a time).
-
-    -Partial application: The process of applying a function to some of its parameters.`,
+    value: `-Number
+    -Use 'Number.isNan()'`,
     type: `Multiple Choice`,
     topicId: 3
   },
@@ -704,11 +712,11 @@ const newAnswers = [
     type: `Multiple Choice`,
     topicId: 3
   },
-  {
-    value: `Functions that operate on other functions, either by taking them as arguments, or by returning them.`,
-    type: `Multiple Choice`,
-    topicId: 3
-  },
+  // {
+  //   value: `Functions that operate on other functions, either by taking them as arguments, or by returning them.`,
+  //   type: `Multiple Choice`,
+  //   topicId: 3
+  // },
   {
     value: `forEach, map, reduce, filter, sort, slice, splice`,
     type: `Multiple Choice`,
@@ -723,6 +731,11 @@ const newAnswers = [
     value: `The eventual result of an asynchronous operation. They are object, with default value of undefined and default status of pending.`,
     type: `Multiple Choice`,
     topicId: 3
+  },
+  {
+    value: `Code that requires an application to wait for some I/O operation before continuing to execute.`,
+    type: `Multiple Choice`,
+    topicId: 9
   },
   {
     value: `A copy of a function that records metadata (if a function is called, how many times it's called, it's arguments, etc.)`,
