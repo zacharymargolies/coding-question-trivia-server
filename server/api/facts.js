@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Fact, Topic} = require('../db/models')
 const asyncHandler = require('express-async-handler')
-import Sequelize from 'sequelize'
+const Sequelize = require('sequelize')
 
 // GET ALL FACTS
 router.get(
