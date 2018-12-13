@@ -8,7 +8,9 @@ const Op = Sequelize.Op
 router.get(
   '/',
   asyncHandler(async (req, res, next) => {
-    const allAnswers = await Answer.findAll({})
+    const allAnswers = await Answer.findAll({
+      // include: [{model: Question}]
+    })
     res.json(allAnswers)
   })
 )
@@ -26,8 +28,22 @@ router.get(
       },
       order: Sequelize.fn('RANDOM'),
       limit: 3
+      // include: [{model: Question}]
     })
     res.json(randomAnswers)
+  })
+)
+
+// GET ANSWER BY ID
+router.get(
+  '/:id',
+  asyncHandler(async (req, res, next) => {
+    const {id} = req.params
+    const answerById = await Answer.findOne({
+      where: {id},
+      include: [{model: Question}]
+    })
+    res.json(answerById)
   })
 )
 

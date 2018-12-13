@@ -23,9 +23,6 @@ Topic.belongsTo(Topic)
 // Questions have one correct answer: Question --> correct answer, false answer, false answer
 Question.belongsTo(Answer)
 Answer.hasOne(Question)
-// Answer.hasMany(Question)
-// Question.hasOne(Answer)
-// Answer.belongsTo(Question)
 
 // Answers have one topic: Answer --> Topic
 Topic.hasMany(Answer)
