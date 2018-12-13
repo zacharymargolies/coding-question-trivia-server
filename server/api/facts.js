@@ -18,7 +18,8 @@ router.get(
   asyncHandler(async (req, res, next) => {
     const randomFacts = await Fact.findAll({
       order: Sequelize.fn('RANDOM'),
-      limit: 10
+      limit: 10,
+      include: [{model: Topic}]
     })
     res.json(randomFacts)
   })
