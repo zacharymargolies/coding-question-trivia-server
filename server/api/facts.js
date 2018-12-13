@@ -12,6 +12,18 @@ router.get(
   })
 )
 
+// GET RANDOM FACTS
+router.get(
+  '/random',
+  asyncHandler(async (req, res, next) => {
+    const randomFacts = await Fact.findAll({
+      order: Sequelize.fn('RANDOM'),
+      limit: 10
+    })
+    res.json(randomFacts)
+  })
+)
+
 // GET FACTS BY TOPIC
 router.get(
   '/topic/:topicId',
@@ -47,18 +59,6 @@ router.get(
     const id = req.params.id
     const fact = await Fact.findById(id)
     res.json(fact)
-  })
-)
-
-// GET RANDOM FACTS
-router.get(
-  '/random',
-  asyncHandler(async (req, res, next) => {
-    const randomFacts = await Fact.findAll({
-      order: Sequelize.fn('RANDOM'),
-      limit: 10
-    })
-    res.json(randomFacts)
   })
 )
 
