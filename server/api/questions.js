@@ -77,7 +77,7 @@ router.get(
       where: {
         difficulty: req.params.difficultyLevel
       },
-      include: [{model: Topic}]
+      include: [{model: Answer}, {model: Topic}]
     })
     res.json(questionsByDifficulty)
   })
