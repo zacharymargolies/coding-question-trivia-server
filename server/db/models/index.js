@@ -3,6 +3,7 @@ const Fact = require('./fact')
 const Topic = require('./topic')
 const Question = require('./question')
 const Answer = require('./answer')
+const User = require('./user')
 
 // Many facts belong to any Topic: Topic --> fact, fact, fact
 Topic.hasMany(Fact)
@@ -32,5 +33,6 @@ module.exports = {
   Fact,
   Topic,
   Question,
-  Answer
+  Answer,
+  User
 }

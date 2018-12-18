@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require('sequelize')
+const db = require('../db')
 
 const Question = db.define('question', {
   content: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false
   },
   difficulty: {
@@ -17,6 +17,6 @@ const Question = db.define('question', {
   type: {
     type: Sequelize.ENUM('Multiple Choice', 'True / False')
   }
-});
+})
 
-module.exports = Question;
+module.exports = Question
