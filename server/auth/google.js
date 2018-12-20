@@ -50,7 +50,8 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     '/callback',
     passport.authenticate('google', {
       successRedirect: 'exp://127.0.0.1:19000',
-      failureRedirect: '/auth/login'
+      // successRedirect: 'http://localhost:8080/api/topics',
+      failureRedirect: 'exp://127.0.0.1:19000'
     })
   )
 }
