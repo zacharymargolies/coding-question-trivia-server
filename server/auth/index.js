@@ -32,6 +32,11 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
+router.get('/success', (req, res, next) => {
+  console.log('OAUTH SUCCESSFUL. USER: ', req.user)
+  res.redirect('exp://127.0.0.1:19000')
+})
+
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
