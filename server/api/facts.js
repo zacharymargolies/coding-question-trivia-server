@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Fact, Topic, SRFact} = require('../db/models')
+const {Fact, Topic, SRFact, User} = require('../db/models')
 const asyncHandler = require('express-async-handler')
 const Sequelize = require('sequelize')
 
@@ -63,13 +63,72 @@ router.get(
   })
 )
 
-// GET FACTS BY USER
+// GET ALL FACTS BY USER, NOT DISCARDED
 router.get(
   '/user/:id',
   asyncHandler(async (req, res, next) => {
     const userId = req.params.id
-    const factsByUser = await SRFact.findAll({where: {userId}})
+    const user = await User.findById(userId)
+    const factsByUser = await user.getFacts({
+      through: {where: {discard: false}}
+    })
     res.send(factsByUser)
+  })
+)
+
+// GET RANDOM FACTS BY USER, NOT DISCARDED
+router.get(
+  '/user/:id/random/:quantity',
+  asyncHandler(async (req, res, next) => {
+    const userId = req.params.id
+    const user = await User.findById(userId)
+    const randomFactsByUser = await user.getFacts({
+      through: {where: {discard: false}},
+      order: Sequelize.fn('RANDOM'),
+      limit: req.params.quantity,
+      include: [{model: Topic}]
+    })
+    res.json(randomFactsByUser)
+  })
+)
+
+// GET FACTS BY USER BY DIFFICULTY, NOT DISCARDED
+router.get(
+  '/user/:id/difficulty/:difficulty',
+  asyncHandler(async (req, res, next) => {
+    const userId = req.params.id
+    const difficulty = req.params.difficulty
+    const user = await User.findById(userId)
+    const randomFactsByUser = await user.getFacts({
+      where: {difficulty},
+      through: {
+        where: {
+          discard: false
+        }
+      },
+      include: [{model: Topic}]
+    })
+    res.json(randomFactsByUser)
+  })
+)
+
+// GET FACTS BY USER BY TOPIC, NOT DISCARDED
+router.get(
+  '/user/:id/topic/:topicId',
+  asyncHandler(async (req, res, next) => {
+    const userId = req.params.id
+    const topicId = req.params.topicId
+    const user = await User.findById(userId)
+    const randomFactsByUser = await user.getFacts({
+      where: {topicId},
+      through: {
+        where: {
+          discard: false
+        }
+      },
+      include: [{model: Topic}]
+    })
+    res.json(randomFactsByUser)
   })
 )
 
