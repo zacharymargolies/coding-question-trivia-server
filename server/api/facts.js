@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Fact, Topic} = require('../db/models')
+const {Fact, Topic, SRFact} = require('../db/models')
 const asyncHandler = require('express-async-handler')
 const Sequelize = require('sequelize')
 
@@ -60,6 +60,16 @@ router.get(
     const id = req.params.id
     const fact = await Fact.findById(id)
     res.json(fact)
+  })
+)
+
+// GET FACTS BY USER
+router.get(
+  '/user/:id',
+  asyncHandler(async (req, res, next) => {
+    const userId = req.params.id
+    const factsByUser = await SRFact.findAll({where: {userId}})
+    res.send(factsByUser)
   })
 )
 
