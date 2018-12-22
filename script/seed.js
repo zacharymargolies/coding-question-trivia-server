@@ -1,112 +1,21 @@
 'use strict'
 
 const db = require('../server/db')
-const {Fact, Topic, Question, Answer} = require('../server/db/models')
+const {
+  Fact,
+  Topic,
+  Question,
+  Answer,
+  SRFact,
+  SRQuestion,
+  User
+} = require('../server/db/models')
+const Sequelize = require('sequelize')
 
-const newFacts = [
+const newUsers = [
   {
-    topicId: 1,
-    content: 'HTML is short for Hypertext Markup Language.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 1,
-    content: 'HTML can be considered the content of our website.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 1,
-    content: 'HTML elements are the building blocks of HTML pages.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 1,
-    content: 'HTML elements are represented by tags.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 1,
-    content:
-      'HTML tags label pieces of content such as "heading", "paragraph", "table", and so on.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 1,
-    content:
-      'Browsers do not display HTML tags, but use them to render the content of the page.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 1,
-    content: 'HTML can be considered the content of our website.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 2,
-    content: 'CSS stands for Cascading Style Sheets.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 2,
-    content:
-      'CSS provides the styling for our websites. It describes how the HTML elements in our websites should be displayed.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
-  },
-  {
-    topicId: 2,
-    content:
-      'CSS is a declarative language. This means that CSS explicitly describes its desired results. This means the language provides what is done, rather than how to do it.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null
+    id: 1,
+    email: 'zm@email.com'
   }
 ]
 
@@ -169,451 +78,100 @@ const newTopics = [
   }
 ]
 
-const newQuestions = [
+const newFacts = [
   {
-    topicId: 3,
-    content: 'What is blocking code?',
+    id: 1,
+    topicId: 1,
+    content: 'HTML is short for Hypertext Markup Language.',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null
+  },
+  {
+    id: 2,
+    topicId: 1,
+    content: 'HTML can be considered the content of our website.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 19
+    docsLink: null
   },
   {
-    topicId: 3,
-    content: 'What is a promise?',
+    id: 3,
+    topicId: 1,
+    content: 'HTML elements are the building blocks of HTML pages.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 18
+    docsLink: null
   },
   {
-    topicId: 3,
-    content: 'What is an IIFE?',
+    id: 4,
+    topicId: 1,
+    content: 'HTML elements are represented by tags.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 17
+    docsLink: null
   },
   {
-    topicId: 3,
-    content: 'Name prominent array prototype methods.',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 16
-  },
-  {
-    topicId: 3,
-    content: 'What is a getter?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 15
-  },
-  {
-    topicId: 3,
-    content: 'Describe pass-by-reference vs. pass-by-value?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 14
-  },
-  {
-    topicId: 3,
-    content: 'What are the six falsey values in JS?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 13
-  },
-  {
-    topicId: 3,
-    content: 'What are the six JS primitives?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 12
-  },
-  {
-    topicId: 3,
-    content: 'What is "callback hell" and how can it be avoided?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 11
-  },
-  {
-    topicId: 3,
+    id: 5,
+    topicId: 1,
     content:
-      'What is the type of `NaN`? How can you reliably test is a value is equal to `NaN`?',
+      'HTML tags label pieces of content such as "heading", "paragraph", "table", and so on.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 10
+    docsLink: null
   },
   {
-    topicId: 3,
-    content: 'What are the advantages of promises?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 9
-  },
-  {
-    topicId: 3,
-    content: 'Why use `use strict` in a JS file?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 8
-  },
-
-  {
-    topicId: 3,
+    id: 6,
+    topicId: 1,
     content:
-      'What is the difference between classical and prototypal inheritance?',
+      'Browsers do not display HTML tags, but use them to render the content of the page.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 7
+    docsLink: null
   },
   {
-    topicId: 3,
-    content: 'What is functional programming?',
+    id: 7,
+    topicId: 1,
+    content: 'HTML can be considered the content of our website.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 6
+    docsLink: null
   },
   {
-    topicId: 3,
+    id: 8,
+    topicId: 2,
+    content: 'CSS stands for Cascading Style Sheets.',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null
+  },
+  {
+    id: 9,
+    topicId: 2,
     content:
-      'What is the significance of, and reason for, wrapping the entire contents of a JS file in a function block?',
+      'CSS provides the styling for our websites. It describes how the HTML elements in our websites should be displayed.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 5
+    docsLink: null
   },
   {
-    topicId: 3,
+    id: 10,
+    topicId: 2,
     content:
-      'What is the difference between JS "expressions" and JS "statements"?',
+      'CSS is a declarative language. This means that CSS explicitly describes its desired results. This means the language provides what is done, rather than how to do it.',
     difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 4
-  },
-  {
-    topicId: 3,
-    content: `What is 'this?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 3
-  },
-  {
-    topicId: 3,
-    content: 'What is scope?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 2
-  },
-  {
-    topicId: 3,
-    content: 'What is closure?',
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 1
-  },
-  {
-    topicId: 9,
-    content: `What is a spy?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 20
-  },
-  {
-    topicId: 9,
-    content: `What is a stub?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 21
-  },
-  {
-    topicId: 9,
-    content: `When to use a stub?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 22
-  },
-  {
-    topicId: 9,
-    content: `What is a mock?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 23
-  },
-  {
-    topicId: 9,
-    content: `When to use a mock?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 24
-  },
-  {
-    topicId: 9,
-    content: `When NOT to use a mock?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 25
-  },
-  {
-    topicId: 10,
-    content: `What is Webpack?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 26
-  },
-  {
-    topicId: 10,
-    content: `What is the difference between Webpack and other build tools like Gulp or Grunt?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 27
-  },
-  {
-    topicId: 10,
-    content: `What is a Webpack bundle?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 28
-  },
-  {
-    topicId: 10,
-    content: `What is a Webpack entry point?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 29
-  },
-  {
-    topicId: 10,
-    content: `In which environment does Webpack run?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 30
-  },
-  {
-    topicId: 10,
-    content: `What is a dependency graph and how does Webpack build it?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 31
-  },
-  {
-    topicId: 10,
-    content: `What is a loader in Webpack?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 32
-  },
-  {
-    topicId: 10,
-    content: `What is a plugin in Webpack?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 33
-  },
-  {
-    topicId: 10,
-    content: `What is the difference between Webpack loaders and plugins?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 34
-  },
-  {
-    topicId: 10,
-    content: `What are some advantages of using 'webpack-dev-server over a simple 'http' server or 'nginx?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 35
-  },
-  {
-    topicId: 10,
-    content: `What is hot-modules-replacement?`,
-    difficulty: 0.3,
-    daysBetweenReveiws: 1,
-    dateLastReviewd: null,
-    quizzable: false,
-    discard: false,
-    docsLink: null,
-    answerId: 36
+    docsLink: null
   }
-  // {
-  //   topicId: NULL,
-  //   content: ``,
-  //   difficulty: 0.3,
-  //   daysBetweenReveiws: 1,
-  //   dateLastReviewd: null,
-  //   quizzable: false,
-  //   discard: false,
-  //   docsLink: null,
-  //   answerId: NULL
-  // },
-  // {
-  //   factId: 1,
-  //   topicId: 1,
-  //   content: 'What does HTML stand for?',
-  //   difficulty: 0.3,
-  //   type: null,
-  //   answerId: 23
-  // },
-  // {
-  //   factId: 2,
-  //   topicId: 1,
-  //   content: 'What does <a></a> represent?',
-  //   difficulty: 0.3,
-  //   type: null,
-  //   answerId: 24
-  // },
-  // {
-  //   factId: 7,
-  //   topicId: 2,
-  //   content: 'What does CSS stand for?',
-  //   difficulty: 0.3,
-  //   type: null,
-  //   answerId: 25
-  // }
-  // {
-  //   factId: 8,
-  //   topicId: 2,
-  //   content: 'What <p></p> represent?',
-  //   difficulty: 0.3,
-  //   type: null,
-  //   answerId: 26
-  // }
 ]
 
 const newAnswers = [
@@ -903,15 +461,464 @@ const newAnswers = [
   // }
 ]
 
+const newQuestions = [
+  {
+    topicId: 3,
+    content: 'What is blocking code?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 19
+  },
+  {
+    topicId: 3,
+    content: 'What is a promise?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 18
+  },
+  {
+    topicId: 3,
+    content: 'What is an IIFE?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 17
+  },
+  {
+    topicId: 3,
+    content: 'Name prominent array prototype methods.',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 16
+  },
+  {
+    topicId: 3,
+    content: 'What is a getter?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 15
+  },
+  {
+    topicId: 3,
+    content: 'Describe pass-by-reference vs. pass-by-value?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 14
+  },
+  {
+    topicId: 3,
+    content: 'What are the six falsey values in JS?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 13
+  },
+  {
+    topicId: 3,
+    content: 'What are the six JS primitives?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 12
+  },
+  {
+    topicId: 3,
+    content: 'What is "callback hell" and how can it be avoided?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 11
+  },
+  {
+    topicId: 3,
+    content:
+      'What is the type of `NaN`? How can you reliably test is a value is equal to `NaN`?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 10
+  },
+  {
+    topicId: 3,
+    content: 'What are the advantages of promises?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 9
+  },
+  {
+    topicId: 3,
+    content: 'Why use `use strict` in a JS file?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 8
+  },
+
+  {
+    topicId: 3,
+    content:
+      'What is the difference between classical and prototypal inheritance?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 7
+  },
+  {
+    topicId: 3,
+    content: 'What is functional programming?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 6
+  },
+  {
+    topicId: 3,
+    content:
+      'What is the significance of, and reason for, wrapping the entire contents of a JS file in a function block?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 5
+  },
+  {
+    topicId: 3,
+    content:
+      'What is the difference between JS "expressions" and JS "statements"?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 4
+  },
+  {
+    topicId: 3,
+    content: `What is 'this?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 3
+  },
+  {
+    topicId: 3,
+    content: 'What is scope?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 2
+  },
+  {
+    topicId: 3,
+    content: 'What is closure?',
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 1
+  },
+  {
+    topicId: 9,
+    content: `What is a spy?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 20
+  },
+  {
+    topicId: 9,
+    content: `What is a stub?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 21
+  },
+  {
+    topicId: 9,
+    content: `When to use a stub?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 22
+  },
+  {
+    topicId: 9,
+    content: `What is a mock?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 23
+  },
+  {
+    topicId: 9,
+    content: `When to use a mock?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 24
+  },
+  {
+    topicId: 9,
+    content: `When NOT to use a mock?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 25
+  },
+  {
+    topicId: 10,
+    content: `What is Webpack?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 26
+  },
+  {
+    topicId: 10,
+    content: `What is the difference between Webpack and other build tools like Gulp or Grunt?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 27
+  },
+  {
+    topicId: 10,
+    content: `What is a Webpack bundle?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 28
+  },
+  {
+    topicId: 10,
+    content: `What is a Webpack entry point?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 29
+  },
+  {
+    topicId: 10,
+    content: `In which environment does Webpack run?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 30
+  },
+  {
+    topicId: 10,
+    content: `What is a dependency graph and how does Webpack build it?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 31
+  },
+  {
+    topicId: 10,
+    content: `What is a loader in Webpack?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 32
+  },
+  {
+    topicId: 10,
+    content: `What is a plugin in Webpack?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 33
+  },
+  {
+    topicId: 10,
+    content: `What is the difference between Webpack loaders and plugins?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 34
+  },
+  {
+    topicId: 10,
+    content: `What are some advantages of using 'webpack-dev-server over a simple 'http' server or 'nginx?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 35
+  },
+  {
+    topicId: 10,
+    content: `What is hot-modules-replacement?`,
+    difficulty: 0.3,
+    daysBetweenReveiws: 1,
+    dateLastReviewd: null,
+    docsLink: null,
+    answerId: 36
+  }
+  // {
+  //   topicId: NULL,
+  //   content: ``,
+  //   difficulty: 0.3,
+  //   daysBetweenReveiws: 1,
+  //   dateLastReviewd: null,
+  //   discard: false,
+  //   docsLink: null,
+  //   answerId: NULL
+  // },
+  // {
+  //   factId: 1,
+  //   topicId: 1,
+  //   content: 'What does HTML stand for?',
+  //   difficulty: 0.3,
+  //   type: null,
+  //   answerId: 23
+  // },
+  // {
+  //   factId: 2,
+  //   topicId: 1,
+  //   content: 'What does <a></a> represent?',
+  //   difficulty: 0.3,
+  //   type: null,
+  //   answerId: 24
+  // },
+  // {
+  //   factId: 7,
+  //   topicId: 2,
+  //   content: 'What does CSS stand for?',
+  //   difficulty: 0.3,
+  //   type: null,
+  //   answerId: 25
+  // }
+  // {
+  //   factId: 8,
+  //   topicId: 2,
+  //   content: 'What <p></p> represent?',
+  //   difficulty: 0.3,
+  //   type: null,
+  //   answerId: 26
+  // }
+]
+
+const newSRFacts = [
+  {
+    userId: 1,
+    quizzable: false,
+    discard: false,
+    factId: 1
+  }
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 2,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 3,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 4,
+  //   userId: 1
+  // }
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 5,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 6,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 7,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 8,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 9,
+  //   userId: 1
+  // },
+  // {
+  //   quizzable: false,
+  //   discard: false,
+  //   factId: 10,
+  //   userId: 1
+  // }
+]
+
+const newSRQuestions = [
+  {
+    userId: 1,
+    daysBetweenReveiws: 1,
+    dateLastReviewed: Sequelize.fn('NOW'),
+    questionId: 1
+  }
+]
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   await Promise.all(
+    newUsers.map(user => User.create(user)),
     newTopics.map(topic => Topic.create(topic)),
     newFacts.map(fact => Fact.create(fact)),
     newAnswers.map(answer => Answer.create(answer)),
-    newQuestions.map(question => Question.create(question))
+    newQuestions.map(question => Question.create(question)),
+    newSRFacts.map(srfact => SRFact.create(srfact)),
+    newSRQuestions.map(srquestion => SRQuestion.create(srquestion))
   )
 
   console.log(`seeded successfully`)

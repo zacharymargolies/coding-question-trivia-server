@@ -4,6 +4,8 @@ const Topic = require('./topic')
 const Question = require('./question')
 const Answer = require('./answer')
 const User = require('./user')
+const SRFact = require('./srfact')
+const SRQuestion = require('./srquestion')
 
 // Many facts belong to any Topic: Topic --> fact, fact, fact
 Topic.hasMany(Fact)
@@ -29,10 +31,20 @@ Answer.hasOne(Question)
 Topic.hasMany(Answer)
 Answer.belongsTo(Topic)
 
+// Linking viewing preferences data to Facts
+Fact.belongsToMany(User, {through: {model: SRFact}})
+User.belongsToMany(Fact, {through: {model: SRFact}})
+
+// Linking spaced repetition data to Questions
+Question.belongsToMany(User, {through: {model: SRQuestion}})
+User.belongsToMany(Question, {through: {model: SRQuestion}})
+
 module.exports = {
   Fact,
   Topic,
   Question,
   Answer,
-  User
+  User,
+  SRFact,
+  SRQuestion
 }
