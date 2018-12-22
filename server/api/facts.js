@@ -132,25 +132,56 @@ router.get(
   })
 )
 
-// UPDATE QUIZZABLE VALUE
+// UPDATE QUIZZABLE VALUE IN SRFACT TABLE
 router.put(
-  '/quizzable/:id',
+  '/user/:userId/quizzable/:factId',
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id
-    const fact = await Fact.findById(id)
+    const {userId, factId} = req.params
+    const fact = await SRFact.findOne({where: {userId, factId}})
     await fact.update({quizzable: true})
     res.json(fact)
   })
 )
 
-// UPDATE DISCARD VALUE
+// UPDATE DISCARD VALUE IN SRFACT TABLE
 router.put(
-  '/discard/:id',
+  '/user/:userId/discard/:factId/:discard',
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id
-    const fact = await Fact.findById(id)
-    await fact.update({discard: true})
+    const {userId, factId, discard} = req.params
+    const fact = await SRFact.findOne({
+      where: {
+        userId,
+        factId
+      }
+    })
+    await fact.update({discard})
     res.json(fact)
+  })
+)
+
+// GET DISCARDED FACTS BY USER
+router.get(
+  '/user/:userId/discard',
+  asyncHandler(async (req, res, next) => {
+    const allDiscardedFacts = await SRFact.findAll({
+      where: {
+        discard: true
+      }
+    })
+    res.json(allDiscardedFacts)
+  })
+)
+
+// GET QUIZZABLE FACTS BY USER
+router.get(
+  '/user/:userId/quizzable',
+  asyncHandler(async (req, res, next) => {
+    const allQuizzableFacts = await SRFact.findAll({
+      where: {
+        quizzable: true
+      }
+    })
+    res.json(allQuizzableFacts)
   })
 )
 
