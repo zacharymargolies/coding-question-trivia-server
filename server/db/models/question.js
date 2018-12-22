@@ -9,7 +9,7 @@ const Question = db.define('question', {
   difficulty: {
     type: Sequelize.FLOAT,
     validate: {
-      min: 0.0,
+      min: 0.1,
       max: 1.0
     },
     defaultValue: 0.3

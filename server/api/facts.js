@@ -154,16 +154,4 @@ router.put(
   })
 )
 
-// UPDATE SPACE REPETITION DATA
-router.put(
-  '/update/:id',
-  asyncHandler(async (req, res, next) => {
-    const id = req.params.id
-    const {correct, performanceRating} = req.body
-    const fact = await Fact.findById(id)
-    await fact.updateSRD(performanceRating)
-    res.send(fact)
-  })
-)
-
 module.exports = router

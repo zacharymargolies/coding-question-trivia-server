@@ -901,6 +901,7 @@ const newSRFacts = [
 const newSRQuestions = [
   {
     userId: 1,
+    difficulty: 0.3,
     daysBetweenReveiws: 1,
     dateLastReviewed: Sequelize.fn('NOW'),
     questionId: 1
