@@ -114,10 +114,9 @@ router.get(
 
 // GET FACTS BY USER BY TOPIC, NOT DISCARDED
 router.get(
-  '/user/:id/topic/:topicId',
+  '/user/:userId/topic/:topicId',
   asyncHandler(async (req, res, next) => {
-    const userId = req.params.id
-    const topicId = req.params.topicId
+    const {userId, topicId} = req.params
     const user = await User.findById(userId)
     const randomFactsByUser = await user.getFacts({
       where: {topicId},
@@ -163,9 +162,13 @@ router.put(
 router.get(
   '/user/:userId/discard',
   asyncHandler(async (req, res, next) => {
-    const allDiscardedFacts = await SRFact.findAll({
-      where: {
-        discard: true
+    const {userId} = req.params
+    const user = await User.findById(userId)
+    const allDiscardedFacts = await user.getFacts({
+      through: {
+        where: {
+          discard: true
+        }
       }
     })
     res.json(allDiscardedFacts)
