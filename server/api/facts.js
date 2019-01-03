@@ -133,11 +133,11 @@ router.get(
 
 // UPDATE QUIZZABLE VALUE IN SRFACT TABLE
 router.put(
-  '/user/:userId/quizzable/:factId',
+  '/user/:userId/quizzable/:factId/:quizzable',
   asyncHandler(async (req, res, next) => {
-    const {userId, factId} = req.params
+    const {userId, factId, quizzable} = req.params
     const fact = await SRFact.findOne({where: {userId, factId}})
-    await fact.update({quizzable: true})
+    await fact.update({quizzable})
     res.json(fact)
   })
 )
