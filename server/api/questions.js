@@ -104,7 +104,8 @@ router.get(
         where: {
           quizzable: true
         }
-      }
+      },
+      include: [{model: Answer}, {model: Topic}]
     })
 
     res.json(questionsByDifficulty)
@@ -123,7 +124,8 @@ router.get(
         where: {
           quizzable: true
         }
-      }
+      },
+      include: [{model: Answer}, {model: Topic}]
     })
 
     res.json(questionsByTopic)
