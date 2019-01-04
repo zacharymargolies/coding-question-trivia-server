@@ -2,6 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const SRQuestion = db.define('SRQuestion', {
+  quizzable: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   difficulty: {
     type: Sequelize.FLOAT,
     validate: {

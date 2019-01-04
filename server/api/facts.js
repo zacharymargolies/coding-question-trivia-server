@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Fact, Topic, SRFact, User} = require('../db/models')
+const {Fact, Topic, SRFact, User, Question} = require('../db/models')
 const asyncHandler = require('express-async-handler')
 const Sequelize = require('sequelize')
 
@@ -86,7 +86,7 @@ router.get(
       through: {where: {discard: false}},
       order: Sequelize.fn('RANDOM'),
       limit: req.params.quantity,
-      include: [{model: Topic}]
+      include: [{model: Topic}, {model: Question}]
     })
     res.json(randomFactsByUser)
   })
@@ -105,7 +105,7 @@ router.get(
           discard: false
         }
       },
-      include: [{model: Topic}]
+      include: [{model: Topic}, {model: Question}]
     })
     res.json(factsByUserByDifficulty)
   })
@@ -124,20 +124,9 @@ router.get(
           discard: false
         }
       },
-      include: [{model: Topic}]
+      include: [{model: Topic}, {model: Question}]
     })
     res.json(factsByUserByTopic)
-  })
-)
-
-// UPDATE QUIZZABLE VALUE IN SRFACT TABLE
-router.put(
-  '/user/:userId/quizzable/:factId/:quizzable',
-  asyncHandler(async (req, res, next) => {
-    const {userId, factId, quizzable} = req.params
-    const fact = await SRFact.findOne({where: {userId, factId}})
-    await fact.update({quizzable})
-    res.json(fact)
   })
 )
 

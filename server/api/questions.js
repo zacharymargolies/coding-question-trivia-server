@@ -92,35 +92,52 @@ router.get(
   })
 )
 
-// GET QUESTION BY USER BY DIFFICULTY
+// GET QUESTIONS BY USER BY DIFFICULTY
 router.get(
   '/user/:userId/difficulty/:difficulty',
   asyncHandler(async (req, res, next) => {
-    const userId = req.params.userId
-    const difficulty = req.params.difficulty
-
+    const {userId, difficulty} = req.params
     const user = await User.findById(userId)
     const questionsByDifficulty = await user.getQuestions({
-      where: {difficulty}
+      where: {difficulty},
+      through: {
+        where: {
+          quizzable: true
+        }
+      }
     })
 
     res.json(questionsByDifficulty)
   })
 )
 
-// GET QUESTION BY USER BY TOPIC
+// GET QUESTIONS BY USER BY TOPIC
 router.get(
   '/user/:userId/topic/:topicId',
   asyncHandler(async (req, res, next) => {
-    const userId = req.params.userId
-    const topicId = req.params.topicId
-
+    const {userId, topicId} = req.params
     const user = await User.findById(userId)
     const questionsByTopic = await user.getQuestions({
-      where: {topicId}
+      where: {topicId},
+      through: {
+        where: {
+          quizzable: true
+        }
+      }
     })
 
     res.json(questionsByTopic)
+  })
+)
+
+// UPDATE QUIZZABLE VALUE IN SRQUESTION TABLE
+router.put(
+  '/user/:userId/quizzable/:questionId/:quizzable',
+  asyncHandler(async (req, res, next) => {
+    const {userId, questionId, quizzable} = req.params
+    const question = await SRQuestion.findOne({where: {userId, questionId}})
+    await question.update({quizzable})
+    res.json(question)
   })
 )
 
