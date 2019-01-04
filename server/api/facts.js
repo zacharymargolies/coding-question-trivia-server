@@ -94,12 +94,11 @@ router.get(
 
 // GET FACTS BY USER BY DIFFICULTY, NOT DISCARDED
 router.get(
-  '/user/:id/difficulty/:difficulty',
+  '/user/:userId/difficulty/:difficulty',
   asyncHandler(async (req, res, next) => {
-    const userId = req.params.id
-    const difficulty = req.params.difficulty
+    const {userId, difficulty} = req.params
     const user = await User.findById(userId)
-    const randomFactsByUser = await user.getFacts({
+    const factsByUserByDifficulty = await user.getFacts({
       where: {difficulty},
       through: {
         where: {
@@ -108,7 +107,7 @@ router.get(
       },
       include: [{model: Topic}]
     })
-    res.json(randomFactsByUser)
+    res.json(factsByUserByDifficulty)
   })
 )
 
@@ -118,7 +117,7 @@ router.get(
   asyncHandler(async (req, res, next) => {
     const {userId, topicId} = req.params
     const user = await User.findById(userId)
-    const randomFactsByUser = await user.getFacts({
+    const factsByUserByTopic = await user.getFacts({
       where: {topicId},
       through: {
         where: {
@@ -127,7 +126,7 @@ router.get(
       },
       include: [{model: Topic}]
     })
-    res.json(randomFactsByUser)
+    res.json(factsByUserByTopic)
   })
 )
 
