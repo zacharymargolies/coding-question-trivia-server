@@ -164,10 +164,9 @@ router.put(
 
 // UPDATE SPACE REPETITION DATA
 router.put(
-  '/user/:userId/update/:id',
+  '/user/:userId/update/:questionId',
   asyncHandler(async (req, res, next) => {
-    const userId = req.params.userId
-    const questionId = req.params.id
+    const {userId, questionId} = req.params
     const {performanceRating} = req.body
     const SRQuestionById = await SRQuestion.findOne({
       where: {userId, questionId}
