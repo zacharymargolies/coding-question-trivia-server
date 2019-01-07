@@ -35,6 +35,7 @@ router.get(
 
 // GET /api/questions?topicId=1
 
+// GET QUESTIONS BY TOPIC
 router.get(
   '/topic/:topicId',
   asyncHandler(async (req, res, next) => {
@@ -89,6 +90,24 @@ router.get(
     const id = req.params.id
     const questionById = await Question.findById(id)
     res.json(questionById)
+  })
+)
+
+// GET ALL QUIZZABLE QUESTIONS
+router.get(
+  '/user/:userId',
+  asyncHandler(async (req, res, next) => {
+    const {userId} = req.params
+    const user = await User.findById(userId)
+    const quizzableItems = await user.getQuestions({
+      through: {
+        where: {
+          quizzable: true
+        }
+      },
+      include: [{model: Answer}, {model: Topic}]
+    })
+    res.json(quizzableItems)
   })
 )
 
