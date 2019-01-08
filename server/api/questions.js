@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Question, Topic, Answer, User, SRQuestion} = require('../db/models')
 const asyncHandler = require('express-async-handler')
+const Sequelize = require('sequelize')
 
 // GET ALL QUESTIONS
 router.get(
@@ -148,6 +149,26 @@ router.get(
     })
 
     res.json(questionsByTopic)
+  })
+)
+
+// GET QUESTIONS BY TIMELINE
+router.get(
+  '/user/:userId/timeline/:quantity',
+  asyncHandler(async (req, res, next) => {
+    const {userId, quantity} = req.params
+    const user = await User.findById(userId)
+    const questionsByTimeline = await user.getQuestions({
+      through: {
+        order: [['daysBetweenReviews', 'desc']],
+        where: {
+          quizzable: true
+        }
+      },
+      limit: quantity
+      // include: [{model: Answer}, {model: Topic}]
+    })
+    res.json(questionsByTimeline)
   })
 )
 
