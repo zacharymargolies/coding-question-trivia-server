@@ -1,5 +1,9 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const Fact = require('../db/models/fact')
+const Question = require('../db/models/question')
+const SRFacts = require('../db/models/srfact')
+const SRQuestions = require('../db/models/srquestion')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -22,6 +26,18 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await User.create(req.body)
+    const allFacts = await Fact.findAll()
+    const allQuestions = await Question.findAll()
+    await SRFacts.bulkCreate(
+      allFacts.map(fact => {
+        return {userId: user.id, factId: fact.id}
+      })
+    )
+    await SRQuestions.bulkCreate(
+      allQuestions.map(question => {
+        return {userId: user.id, questionId: question.id}
+      })
+    )
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
@@ -33,9 +49,9 @@ router.post('/signup', async (req, res, next) => {
 })
 
 router.get('/success', (req, res, next) => {
-  // console.log('OAUTH SUCCESSFUL. USER: ', req.user)
-  res.send(req.user)
-  // res.redirect('exp://127.0.0.1:19000')
+  // res.send(req.user)
+  res.cookie(req.cookies)
+  res.redirect('exp://172.16.23.28:19000')
 })
 
 router.post('/logout', (req, res) => {

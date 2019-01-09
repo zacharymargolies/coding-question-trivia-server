@@ -913,11 +913,11 @@ async function seed() {
   console.log('db synced!')
 
   await Promise.all(
-    newUsers.map(user => User.create(user)),
     newTopics.map(topic => Topic.create(topic)),
     newFacts.map(fact => Fact.create(fact)),
     newAnswers.map(answer => Answer.create(answer)),
     newQuestions.map(question => Question.create(question)),
+    newUsers.map(user => User.create(user)),
     newSRFacts.map(srfact => SRFact.create(srfact)),
     newSRQuestions.map(srquestion => SRQuestion.create(srquestion))
   )

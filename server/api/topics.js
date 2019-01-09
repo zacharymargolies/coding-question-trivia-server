@@ -7,7 +7,6 @@ router.get(
   '/',
   asyncHandler(async (req, res, next) => {
     const allTopics = await Topic.findAll({})
-    console.log('REQ USER: ', req.user)
     res.json(allTopics)
   })
 )

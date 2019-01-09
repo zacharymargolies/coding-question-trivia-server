@@ -9,6 +9,7 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
+const cookieParser = require('cookie-parser')
 // const socketio = require('socket.io')
 module.exports = app
 
@@ -51,13 +52,18 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
+  app.use(cookieParser())
+  app.use((req, res, next) => {
+    console.log('--- COOKIES FROM INDEX: --- ', req.cookies)
+    next()
+  })
   // session middleware with passport
   app.use(
     session({
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false
+      saveUninitialized: true
     })
   )
   app.use(passport.initialize())
