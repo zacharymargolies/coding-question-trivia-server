@@ -52,9 +52,9 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
-  app.use(cookieParser())
+  // app.use(cookieParser())
   app.use((req, res, next) => {
-    console.log('--- COOKIES FROM INDEX: --- ', req.cookies)
+    // console.log('--- COOKIES FROM INDEX: --- ', req.cookies)
     next()
   })
   // session middleware with passport

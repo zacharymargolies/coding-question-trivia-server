@@ -175,6 +175,26 @@ router.get(
   })
 )
 
+// GET RANDOM QUESTIONS BY USER
+router.get(
+  '/random/:quantity',
+  asyncHandler(async (req, res, next) => {
+    const {id} = req.user
+    const {quantity} = req.params
+    const user = await User.findById(id)
+    const questionsByTimeline = await user.getQuestions({
+      through: {
+        where: {
+          quizzable: true
+        }
+      },
+      limit: quantity,
+      include: [{model: Answer}, {model: Topic}]
+    })
+    res.json(questionsByTimeline)
+  })
+)
+
 // UPDATE QUIZZABLE VALUE IN SRQUESTION TABLE
 router.put(
   '/quizzable/:questionId/:quizzable',
