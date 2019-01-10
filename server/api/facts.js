@@ -64,7 +64,7 @@ router.get(
     const randomFacts = await Fact.findAll({
       order: Sequelize.fn('RANDOM'),
       limit: req.params.quantity,
-      include: [{model: Topic}]
+      include: [{model: Topic}, {model: Question}]
     })
     res.json(randomFacts)
   })
