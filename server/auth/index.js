@@ -35,7 +35,11 @@ router.post('/signup', async (req, res, next) => {
     )
     await SRQuestions.bulkCreate(
       allQuestions.map(question => {
-        return {userId: user.id, questionId: question.id}
+        return {
+          userId: user.id,
+          questionId: question.id,
+          difficulty: question.difficulty
+        }
       })
     )
     req.login(user, err => (err ? next(err) : res.json(user)))

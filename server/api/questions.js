@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const {Question, Topic, Answer, User, SRQuestion} = require('../db/models')
 const asyncHandler = require('express-async-handler')
-const Sequelize = require('sequelize')
 
 // GET ALL QUESTIONS
 router.get(
@@ -221,10 +220,12 @@ router.put(
     const {id} = req.user
     const {questionId} = req.params
     const {performanceRating} = req.body
+    console.log('performanceRating :', performanceRating)
     const SRQuestionById = await SRQuestion.findOne({
       where: {userId: id, questionId}
     })
     await SRQuestionById.updateSRD(performanceRating)
+    console.log('SRQuestionById :', SRQuestionById)
     res.send(SRQuestionById)
   })
 )
