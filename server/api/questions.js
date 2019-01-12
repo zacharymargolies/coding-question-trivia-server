@@ -160,17 +160,24 @@ router.get(
   asyncHandler(async (req, res, next) => {
     const {id} = req.user
     const {quantity} = req.params
-    const user = await User.findById(id)
-    const questionsByTimeline = await user.getQuestions({
-      through: {
-        order: [['daysBetweenReviews', 'desc']],
-        where: {
-          quizzable: true
-        }
+    const SRQuestions = await SRQuestion.findAll({
+      where: {
+        userId: id,
+        quizzable: true
       },
+      order: [['daysBetweenReviews']],
       limit: quantity
-      // include: [{model: Answer}, {model: Topic}]
     })
+
+    const questionsByTimelinePromise = SRQuestions.map(async question => {
+      return Question.findOne({
+        where: {
+          id: question.questionId
+        },
+        include: [{model: Answer}, {model: Topic}]
+      })
+    })
+    const questionsByTimeline = await Promise.all(questionsByTimelinePromise)
     res.json(questionsByTimeline)
   })
 )
